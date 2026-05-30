@@ -101,8 +101,19 @@
   .btn:active{background:#efe7d6;}
   .btn-secondary{border-color:var(--line); color:var(--ink-soft);}
   .foot{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:12px; letter-spacing:0.05em; font-weight:600; line-height:1.8;}
-  #title-screen .title-company{margin-top:22px; font-size:18px; font-weight:700; color:var(--ink); letter-spacing:0.1em;}
-  #title-screen .maker{margin-top:4px; font-size:11px; font-weight:400; color:var(--ink-soft); opacity:0.7; letter-spacing:0.04em;}
+  /* 株式会社東角園：中央・大きく・金の箔押し風 */
+  #title-screen .title-company{display:flex; align-items:center; justify-content:center; gap:14px; margin-top:26px;}
+  #title-screen .title-company::before,
+  #title-screen .title-company::after{content:""; width:36px; height:1.5px;}
+  #title-screen .title-company::before{background:linear-gradient(90deg,var(--gold),var(--gold-soft),transparent);}
+  #title-screen .title-company::after{background:linear-gradient(90deg,transparent,var(--gold-soft),var(--gold));}
+  #title-screen .title-company span{
+    font-size:27px; font-weight:700; letter-spacing:0.16em;
+    background:linear-gradient(135deg,#8a6b22 0%,#e8cd7a 28%,#b8902f 50%,#f3dd92 72%,#8a6b22 100%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:var(--gold);
+    filter:drop-shadow(0 1px 0 rgba(255,255,255,0.55)) drop-shadow(0 1px 2px rgba(120,90,20,0.28));}
+  #title-screen .title-address{margin-top:7px; font-size:12.5px; color:var(--ink-soft); letter-spacing:0.05em; font-weight:600;}
+  #title-screen .maker{margin-top:6px; font-size:11px; font-weight:400; color:var(--ink-soft); opacity:0.65; letter-spacing:0.06em;}
 
   /* 縦型（ポートレート）スマホ・タブレット向け最適化：1画面に収める */
   @media (orientation: portrait){
@@ -175,8 +186,9 @@
         <div class="t-desc">チャンス <b>6回</b></div>
       </button>
     </div>
-    <div class="title-company">株式会社東角園</div>
-    <div class="maker">制作：合同会社インカムベース</div>
+    <div class="title-company"><span>株式会社東角園</span></div>
+    <div class="title-address">愛知県西尾市吉良町上横須賀菱池3番地</div>
+    <div class="maker">Produced by 合同会社インカムベース</div>
   </div>
 
   <!-- ゲーム画面 -->
@@ -195,9 +207,8 @@
       <button class="btn" id="retry">もう一度（同じ金額）</button>
       <button class="btn btn-secondary" id="back">最初に戻る</button>
     </div>
+    <div class="foot">愛知県西尾市吉良町上横須賀菱池3番地</div>
   </div>
-
-  <div class="foot">愛知県西尾市吉良町上横須賀菱池3番地　東角園</div>
 </div>
 
 <script>
