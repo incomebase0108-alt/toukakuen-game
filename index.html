@@ -59,15 +59,22 @@
   .stat{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:8px 20px; text-align:center; min-width:120px;}
   .stat-label{font-size:13px; color:var(--ink-soft); letter-spacing:0.08em; font-weight:600;}
   .stat-value{font-size:28px; font-weight:700; margin-top:2px;}
-  #result{display:none; max-width:620px; margin:16px auto 0; border-radius:14px; padding:16px; text-align:center;}
-  #result.win{background:#eef4e6; border:1px solid #b9cda3; color:var(--green);}
-  #result.lose{background:#f0ebe0; border:1px solid var(--line); color:var(--ink-soft);}
+  /* 結果は全画面オーバーレイ（盤面の高さに関係なく1画面に収める） */
+  #result{display:none; position:fixed; inset:0; z-index:60; padding:16px;
+    align-items:center; justify-content:center;
+    background:rgba(58,44,26,0.45); -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);}
+  #result.show{display:flex;}
+  .result-inner{width:100%; max-width:440px; max-height:94vh; overflow-y:auto;
+    border-radius:18px; padding:20px 18px; text-align:center; box-shadow:0 14px 44px rgba(0,0,0,0.28);}
+  #result.win .result-inner{background:#eef4e6; border:1px solid #b9cda3; color:var(--green);}
+  #result.lose .result-inner{background:#fbf7ee; border:1px solid var(--line); color:var(--ink-soft);}
   #result .r-title{font-size:24px; font-weight:700; margin-bottom:6px;}
-  #result .r-body{font-size:16px; line-height:1.7; font-weight:600;}
-  #result .won-list{margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;}
-  #result .won-chip{background:#fdf6e3; border:1px solid var(--gold-soft); color:var(--ink); border-radius:20px; padding:5px 14px; font-size:15px; font-weight:600;}
-  #result .thanks{margin-top:16px; padding-top:14px; border-top:1px dashed var(--line);
-    font-size:17px; line-height:1.9; color:var(--ink); letter-spacing:0.03em;}
+  #result .r-body{font-size:15px; line-height:1.6; font-weight:600;}
+  #result .won-list{margin-top:9px; display:flex; flex-wrap:wrap; gap:7px; justify-content:center;}
+  #result .won-chip{background:#fdf6e3; border:1px solid var(--gold-soft); color:var(--ink); border-radius:20px; padding:4px 13px; font-size:14px; font-weight:700;}
+  #result .thanks{margin-top:12px; padding-top:11px; border-top:1px dashed var(--line);
+    font-size:15px; line-height:1.7; color:var(--ink); letter-spacing:0.03em; font-weight:600;}
+  .result-actions{margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
   #board{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; max-width:520px; margin:0 auto;}
   .card{position:relative; aspect-ratio:3/4; border:none; padding:0; cursor:pointer; background:transparent; perspective:800px; border-radius:14px;}
   .card-inner{position:absolute; inset:0; border-radius:14px; transition:transform .45s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;}
@@ -235,7 +242,7 @@
     first=null; second=null; lock=false; tries=maxTries; matched=0; over=false; wonNames=[];
     triesEl.textContent=tries;
     pairsEl.textContent='0品';
-    resultEl.style.display='none'; resultEl.className='';
+    resultEl.className=''; resultEl.innerHTML='';
     render();
   }
 
@@ -280,29 +287,38 @@
 
   function finish(){
     over=true;
+    var inner;
     if(matched>0){
       var chips=wonNames.map(function(n){return '<span class="won-chip">'+n+'</span>';}).join('');
-      resultEl.className='win';
-      resultEl.innerHTML='<div class="r-title">あたり '+matched+' 品！</div>'+
+      resultEl.className='win show';
+      inner='<div class="r-title">あたり '+matched+' 品！</div>'+
         '<div class="r-body">下記の銘菓を当てられました。<br>この画面を店員にお見せください。</div>'+
         '<div class="won-list">'+chips+'</div>'+
         '<div class="thanks">お買い物ありがとうございました。<br>これからも東角園をよろしくお願いいたします！</div>';
     } else {
-      resultEl.className='lose';
-      resultEl.innerHTML='<div class="r-title">ざんねん…</div>'+
+      resultEl.className='lose show';
+      inner='<div class="r-title">ざんねん…</div>'+
         '<div class="r-body">今回はそろいませんでした。<br>またのご来店をお待ちしております。</div>'+
         '<div class="thanks">お買い物ありがとうございました。<br>これからも東角園をよろしくお願いいたします！</div>';
     }
-    resultEl.style.display='block';
+    resultEl.innerHTML='<div class="result-inner">'+inner+
+      '<div class="result-actions">'+
+        '<button class="btn" id="r-retry">もう一度（同じ金額）</button>'+
+        '<button class="btn btn-secondary" id="r-back">最初に戻る</button>'+
+      '</div></div>';
+    document.getElementById('r-retry').addEventListener('click', initGame);
+    document.getElementById('r-back').addEventListener('click', backToTitle);
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('.tier-btn'), function(b){
     b.addEventListener('click', function(){ startTier(parseInt(b.getAttribute('data-tries'),10)); });
   });
-  document.getElementById('retry').addEventListener('click', initGame);
-  document.getElementById('back').addEventListener('click', function(){
+  function backToTitle(){
+    resultEl.className=''; resultEl.innerHTML='';
     gameScreen.style.display='none'; titleScreen.style.display='block';
-  });
+  }
+  document.getElementById('retry').addEventListener('click', initGame);
+  document.getElementById('back').addEventListener('click', backToTitle);
 })();
 </script>
 </body>
