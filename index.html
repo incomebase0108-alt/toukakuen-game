@@ -17,53 +17,53 @@
     color:var(--ink);
     font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
     display:flex; flex-direction:column; align-items:center;
-    min-height:100vh; padding:24px 16px 40px; overflow-x:hidden;
+    min-height:100vh; padding:14px 14px 18px; overflow-x:hidden;
   }
   .wrap{width:100%; max-width:760px; margin:0 auto;}
-  header{text-align:center; margin-bottom:18px;}
-  .brand-sub{font-size:14px; letter-spacing:0.35em; color:var(--ink-soft); margin-bottom:4px;}
-  .brand{font-size:40px; letter-spacing:0.25em; font-weight:600; line-height:1.1;}
+  header{text-align:center; margin-bottom:10px;}
+  .brand-sub{font-size:14px; letter-spacing:0.35em; color:var(--ink-soft); margin-bottom:4px; font-weight:600;}
+  .brand{font-size:34px; letter-spacing:0.25em; font-weight:700; line-height:1.1;}
   .brand .seal{display:inline-block; vertical-align:middle; margin-left:10px; width:34px; height:34px;
     border-radius:6px; background:var(--crimson); color:#fbf7ee; font-size:15px; line-height:34px; font-weight:600;}
 
   /* ---- タイトル画面 ---- */
   #title-screen{text-align:center;}
-  .title-game{font-size:22px; letter-spacing:0.2em; color:var(--ink); margin:6px 0 4px;}
-  .title-lead{font-size:15px; color:var(--ink-soft); line-height:1.9; margin:18px auto 26px; max-width:560px;}
-  .staff-note{font-size:13px; color:var(--ink-soft); letter-spacing:0.08em; margin-bottom:14px;}
-  .tier-buttons{display:flex; flex-direction:column; gap:14px; max-width:420px; margin:0 auto;}
+  .title-game{font-size:22px; letter-spacing:0.2em; color:var(--ink); margin:4px 0 2px; font-weight:700;}
+  .title-lead{font-size:15px; color:var(--ink-soft); line-height:1.7; margin:10px auto 14px; max-width:560px; font-weight:600;}
+  .staff-note{font-size:13px; color:var(--ink-soft); letter-spacing:0.08em; margin-bottom:10px; font-weight:600;}
+  .tier-buttons{display:flex; flex-direction:column; gap:10px; max-width:420px; margin:0 auto;}
   .tier-btn{
     font-family:inherit; cursor:pointer; text-align:center;
     background:var(--paper); border:1px solid var(--gold-soft); border-radius:16px;
-    padding:18px 20px; transition:background .15s, transform .1s;
+    padding:13px 20px; transition:background .15s, transform .1s;
     box-shadow:0 2px 0 rgba(168,134,47,0.18);
   }
   .tier-btn:active{background:#efe7d6; transform:translateY(1px);}
-  .tier-btn .t-amt{font-size:21px; font-weight:600; color:var(--crimson); letter-spacing:0.03em;}
-  .tier-btn .t-desc{font-size:14px; color:var(--ink-soft); margin-top:5px;}
+  .tier-btn .t-amt{font-size:21px; font-weight:700; color:var(--crimson); letter-spacing:0.03em;}
+  .tier-btn .t-desc{font-size:14px; color:var(--ink-soft); margin-top:4px; font-weight:600;}
   .tier-btn .t-desc b{color:var(--gold);}
 
   /* ---- ゲーム画面 ---- */
   #game-screen{display:none;}
   .tier-banner{margin:0 auto 4px; max-width:620px; background:var(--paper); border:1px solid var(--line);
     border-radius:14px; padding:14px 18px; text-align:center; box-shadow:0 2px 0 rgba(168,134,47,0.18);}
-  .tier-amount{font-size:19px; color:var(--crimson); font-weight:600; letter-spacing:0.04em;}
-  .tier-rule{font-size:15px; color:var(--ink-soft); margin-top:6px; line-height:1.7;}
+  .tier-amount{font-size:19px; color:var(--crimson); font-weight:700; letter-spacing:0.04em;}
+  .tier-rule{font-size:15px; color:var(--ink-soft); margin-top:5px; line-height:1.6; font-weight:600;}
   .tier-rule b{color:var(--gold);}
-  .stats{display:flex; justify-content:center; gap:14px; margin:20px 0 18px;}
-  .stat{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:10px 20px; text-align:center; min-width:120px;}
-  .stat-label{font-size:13px; color:var(--ink-soft); letter-spacing:0.08em;}
-  .stat-value{font-size:30px; font-weight:600; margin-top:2px;}
+  .stats{display:flex; justify-content:center; gap:14px; margin:12px 0 12px;}
+  .stat{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:8px 20px; text-align:center; min-width:120px;}
+  .stat-label{font-size:13px; color:var(--ink-soft); letter-spacing:0.08em; font-weight:600;}
+  .stat-value{font-size:28px; font-weight:700; margin-top:2px;}
   #result{display:none; max-width:620px; margin:0 auto 18px; border-radius:14px; padding:18px; text-align:center;}
   #result.win{background:#eef4e6; border:1px solid #b9cda3; color:var(--green);}
   #result.lose{background:#f0ebe0; border:1px solid var(--line); color:var(--ink-soft);}
-  #result .r-title{font-size:24px; font-weight:600; margin-bottom:6px;}
-  #result .r-body{font-size:16px; line-height:1.8;}
+  #result .r-title{font-size:24px; font-weight:700; margin-bottom:6px;}
+  #result .r-body{font-size:16px; line-height:1.7; font-weight:600;}
   #result .won-list{margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;}
   #result .won-chip{background:#fdf6e3; border:1px solid var(--gold-soft); color:var(--ink); border-radius:20px; padding:5px 14px; font-size:15px; font-weight:600;}
   #result .thanks{margin-top:16px; padding-top:14px; border-top:1px dashed var(--line);
     font-size:17px; line-height:1.9; color:var(--ink); letter-spacing:0.03em;}
-  #board{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:680px; margin:0 auto;}
+  #board{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; max-width:520px; margin:0 auto;}
   .card{position:relative; aspect-ratio:3/4; border:none; padding:0; cursor:pointer; background:transparent; perspective:800px; border-radius:14px;}
   .card-inner{position:absolute; inset:0; border-radius:14px; transition:transform .45s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;}
   .card.flipped .card-inner{transform:rotateY(180deg);}
@@ -77,42 +77,56 @@
   .face-front .kashi-photo{position:absolute; top:0; left:0; right:0; bottom:46px; background-size:cover; background-position:center;}
   .face-front .kashi-label{position:absolute; left:0; right:0; bottom:0; height:46px; background:var(--paper);
     border-top:1px solid var(--line); display:flex; flex-direction:column; align-items:center; justify-content:center;}
-  .face-front .kashi-sub{font-size:10px; opacity:0.7; letter-spacing:0.05em; line-height:1.2;}
-  .face-front .kashi-name{font-size:15px; font-weight:600; letter-spacing:0.02em; line-height:1.25;}
+  .face-front .kashi-sub{font-size:10px; opacity:0.8; letter-spacing:0.05em; line-height:1.2; font-weight:600;}
+  .face-front .kashi-name{font-size:15px; font-weight:700; letter-spacing:0.02em; line-height:1.25;}
   .card.done{cursor:default;}
   .card.done .face-front{border:2px solid var(--gold); box-shadow:0 0 0 3px rgba(168,134,47,0.18) inset;}
   .card.done .face-front .kashi-photo::after{content:"あたり"; position:absolute; top:6px; right:6px;
     background:var(--crimson); color:#fbf7ee; font-size:11px; padding:2px 7px; border-radius:10px; letter-spacing:0.05em;}
-  .controls{text-align:center; margin-top:24px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
-  .btn{font-family:inherit; font-size:17px; color:var(--ink); background:var(--paper); border:1px solid var(--gold-soft);
-    border-radius:30px; padding:12px 30px; cursor:pointer; letter-spacing:0.06em; transition:background .15s;}
+  .controls{text-align:center; margin-top:14px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .btn{font-family:inherit; font-size:17px; font-weight:700; color:var(--ink); background:var(--paper); border:1px solid var(--gold-soft);
+    border-radius:30px; padding:11px 30px; cursor:pointer; letter-spacing:0.06em; transition:background .15s;}
   .btn:active{background:#efe7d6;}
   .btn-secondary{border-color:var(--line); color:var(--ink-soft);}
-  .foot{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:22px; letter-spacing:0.05em;}
+  .foot{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:12px; letter-spacing:0.05em; font-weight:600; line-height:1.8;}
+  .foot .maker{display:inline-block; margin-top:2px; font-size:12px; font-weight:700; color:var(--gold);}
 
-  /* 縦型（ポートレート）タブレット向け最適化 */
+  /* 縦型（ポートレート）スマホ・タブレット向け最適化：1画面に収める */
   @media (orientation: portrait){
-    .wrap{max-width:900px;}
-    .brand{font-size:48px;}
-    .title-game{font-size:25px;}
-    .title-lead{font-size:17px;}
-    #board{grid-template-columns:repeat(3,1fr); max-width:none; gap:18px;}
-    .tier-btn{padding:24px 20px;}
-    .tier-btn .t-amt{font-size:24px;}
-    .tier-btn .t-desc{font-size:16px;}
-    .stat{min-width:150px; padding:14px 28px;}
-    .stat-value{font-size:36px;}
-    .stat-label{font-size:15px;}
-    .tier-amount{font-size:22px;}
-    .tier-rule{font-size:17px;}
-    .face-front .kashi-name{font-size:18px;}
-    .face-front .kashi-sub{font-size:12px;}
-    .face-front .kashi-label{height:54px;}
-    .face-front .kashi-photo{bottom:54px;}
-    #result .r-title{font-size:28px;}
-    #result .r-body{font-size:18px;}
-    #result .thanks{font-size:19px;}
-    .btn{font-size:19px; padding:14px 34px;}
+    .wrap{max-width:560px;}
+    .brand{font-size:36px;}
+    .title-game{font-size:23px;}
+    .title-lead{font-size:16px;}
+    /* スマホでは4列＝3行に収め、縦の高さを抑える */
+    #board{grid-template-columns:repeat(4,1fr); max-width:520px; gap:10px;}
+    .tier-btn{padding:14px 20px;}
+    .tier-btn .t-amt{font-size:22px;}
+    .tier-btn .t-desc{font-size:15px;}
+    .stat{min-width:130px; padding:9px 22px;}
+    .stat-value{font-size:30px;}
+    .stat-label{font-size:14px;}
+    .tier-amount{font-size:20px;}
+    .tier-rule{font-size:16px;}
+    .face-front .kashi-name{font-size:15px;}
+    .face-front .kashi-sub{font-size:11px;}
+    .face-front .kashi-label{height:46px;}
+    .face-front .kashi-photo{bottom:46px;}
+    #result .r-title{font-size:25px;}
+    #result .r-body{font-size:17px;}
+    #result .thanks{font-size:18px;}
+    .btn{font-size:18px; padding:12px 30px;}
+  }
+
+  /* 画面が低いとき（横向き等）はさらに圧縮 */
+  @media (max-height:680px){
+    body{padding:8px 12px 12px;}
+    header{margin-bottom:6px;}
+    .brand{font-size:26px;}
+    .title-lead{margin:8px auto 10px; line-height:1.5;}
+    .stats{margin:8px 0;}
+    #board{max-width:440px; gap:8px;}
+    .controls{margin-top:10px;}
+    .foot{margin-top:8px;}
   }
 </style>
 </head>
@@ -166,7 +180,10 @@
     </div>
   </div>
 
-  <div class="foot">愛知県西尾市吉良町上横須賀菱池3番地　東角園</div>
+  <div class="foot">
+    愛知県西尾市吉良町上横須賀菱池3番地　東角園<br>
+    <span class="maker">制作：合同会社インカムベース</span>
+  </div>
 </div>
 
 <script>
