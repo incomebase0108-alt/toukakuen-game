@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>東角園 お楽しみゲーム（5,000円以上）</title>
+<style>
+  :root{
+    --tier-tries: 3;
+    --bg: #f4efe4;
+    --paper: #fbf7ee;
+    --ink: #3a2c1a;
+    --ink-soft: #7a6a53;
+    --gold: #a8862f;
+    --gold-soft: #c9aa57;
+    --crimson: #9c3b2e;
+    --green: #4a6b3a;
+    --line: rgba(58,44,26,0.14);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; height:100%;}
+  body{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(168,134,47,0.08), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100%;
+    padding:24px 16px 40px;
+    overflow-x:hidden;
+  }
+  .wrap{width:100%; max-width:760px; margin:0 auto;}
+  header{text-align:center; margin-bottom:18px;}
+  .brand-sub{font-size:14px; letter-spacing:0.35em; color:var(--ink-soft); margin-bottom:4px;}
+  .brand{font-size:40px; letter-spacing:0.25em; font-weight:600; color:var(--ink); line-height:1.1;}
+  .brand .seal{
+    display:inline-block; vertical-align:middle; margin-left:10px;
+    width:34px; height:34px; border-radius:6px; background:var(--crimson);
+    color:#fbf7ee; font-size:15px; line-height:34px; letter-spacing:0;
+    font-weight:600;
+  }
+  .tier-banner{
+    margin:14px auto 0; max-width:620px;
+    background:var(--paper); border:1px solid var(--line);
+    border-radius:14px; padding:14px 18px; text-align:center;
+    box-shadow:0 2px 0 rgba(168,134,47,0.18);
+  }
+  .tier-amount{font-size:19px; color:var(--crimson); font-weight:600; letter-spacing:0.04em;}
+  .tier-rule{font-size:15px; color:var(--ink-soft); margin-top:6px; line-height:1.7;}
+  .tier-rule b{color:var(--gold);}
+  .stats{display:flex; justify-content:center; gap:14px; margin:20px 0 18px;}
+  .stat{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:10px 20px; text-align:center; min-width:120px;
+  }
+  .stat-label{font-size:13px; color:var(--ink-soft); letter-spacing:0.08em;}
+  .stat-value{font-size:30px; font-weight:600; color:var(--ink); margin-top:2px;}
+  #result{
+    display:none; max-width:620px; margin:0 auto 18px;
+    border-radius:14px; padding:18px; text-align:center;
+  }
+  #result.win{background:#eef4e6; border:1px solid #b9cda3; color:var(--green);}
+  #result.lose{background:#f0ebe0; border:1px solid var(--line); color:var(--ink-soft);}
+  #result .r-title{font-size:24px; font-weight:600; margin-bottom:6px;}
+  #result .r-body{font-size:16px; line-height:1.8;}
+  #result .r-body b{font-size:19px;}
+  #board{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+    max-width:680px; margin:0 auto;
+  }
+  .card{
+    position:relative; aspect-ratio:3/4; border:none; padding:0; cursor:pointer;
+    background:transparent; perspective:800px; border-radius:14px;
+  }
+  .card-inner{
+    position:absolute; inset:0; border-radius:14px;
+    transition:transform .45s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d;
+  }
+  .card.flipped .card-inner{transform:rotateY(180deg);}
+  .face{
+    position:absolute; inset:0; border-radius:14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    overflow:hidden;
+  }
+  .face-back{
+    background:
+      repeating-linear-gradient(45deg, rgba(168,134,47,0.08) 0 8px, transparent 8px 16px),
+      var(--paper);
+    border:1px solid var(--gold-soft);
+  }
+  .face-back .mon{
+    width:46px; height:46px; border-radius:50%;
+    border:2px solid var(--gold); color:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; font-weight:600;
+  }
+  .face-front{
+    transform:rotateY(180deg);
+    border:1px solid rgba(58,44,26,0.18);
+    padding:8px; text-align:center;
+  }
+  .face-front .kashi-sub{font-size:11px; opacity:0.75; letter-spacing:0.05em;}
+  .face-front .kashi-name{font-size:17px; font-weight:600; margin-top:2px; letter-spacing:0.03em;}
+  .face-front .kashi-mark{font-size:34px; line-height:1; margin-bottom:6px;}
+  .card.done{cursor:default;}
+  .card.done .face-front{
+    border:2px solid var(--gold); box-shadow:0 0 0 3px rgba(168,134,47,0.18) inset;
+    background:#fdf6e3;
+  }
+  .card.done .face-front::after{
+    content:"あたり"; position:absolute; top:6px; right:6px;
+    background:var(--crimson); color:#fbf7ee; font-size:11px;
+    padding:2px 7px; border-radius:10px; letter-spacing:0.05em;
+  }
+  #result .won-list{
+    margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+  }
+  #result .won-chip{
+    background:#fdf6e3; border:1px solid var(--gold-soft); color:var(--ink);
+    border-radius:20px; padding:5px 14px; font-size:15px; font-weight:600;
+  }
+  .controls{text-align:center; margin-top:24px;}
+  .btn{
+    font-family:inherit; font-size:17px; color:var(--ink);
+    background:var(--paper); border:1px solid var(--gold-soft);
+    border-radius:30px; padding:12px 30px; cursor:pointer;
+    letter-spacing:0.06em; transition:background .15s;
+  }
+  .btn:active{background:#efe7d6;}
+  .foot{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:22px; letter-spacing:0.05em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand-sub">銘菓・御菓子所</div>
+    <div class="brand">東角園<span class="seal">菓</span></div>
+  </header>
+
+  <div class="tier-banner">
+    <div class="tier-amount">5,000円以上お買い上げのお客様へ</div>
+    <div class="tier-rule">
+      同じ銘菓を2枚そろえたら「あたり」・チャンスは<b>3回</b><br>
+      そろえた数だけ和菓子を一品プレゼント
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">のこりチャンス</div>
+      <div class="stat-value" id="tries">3</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">あたり</div>
+      <div class="stat-value" id="pairs">0品</div>
+    </div>
+  </div>
+
+  <div id="result"></div>
+
+  <div id="board"></div>
+
+  <div class="controls">
+    <button class="btn" id="reset">はじめから</button>
+  </div>
+
+  <div class="foot">愛知県西尾市吉良町上横須賀菱池3番地　東角園</div>
+</div>
+
+<script>
+(function(){
+  var MAX_TRIES = 3;
+  var items = [
+    {name:"赤馬",        sub:"代表銘菓", mark:"馬"},
+    {name:"黄金づつみ",  sub:"郷土銘菓", mark:"包"},
+    {name:"やまとゆきはら", sub:"蒸し菓子", mark:"雪"},
+    {name:"松韻",        sub:"人生劇場", mark:"松"},
+    {name:"舟音",        sub:"人生劇場", mark:"舟"},
+    {name:"夢幻篇",      sub:"人生劇場", mark:"夢"}
+  ];
+
+  var board=document.getElementById('board');
+  var triesEl=document.getElementById('tries');
+  var pairsEl=document.getElementById('pairs');
+  var resultEl=document.getElementById('result');
+  var resetBtn=document.getElementById('reset');
+
+  var deck, first, second, lock, tries, matched, over, wonNames;
+
+  function shuffle(a){
+    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    return a;
+  }
+
+  function init(){
+    deck=shuffle(items.concat(items).map(function(it,i){return {id:i,item:it};}));
+    first=null; second=null; lock=false; tries=MAX_TRIES; matched=0; over=false; wonNames=[];
+    triesEl.textContent=tries;
+    pairsEl.textContent='0品';
+    resultEl.style.display='none';
+    resultEl.className='';
+    render();
+  }
+
+  function render(){
+    board.innerHTML='';
+    deck.forEach(function(card){
+      var el=document.createElement('button');
+      el.className='card';
+      el.setAttribute('aria-label','カード');
+      el.innerHTML=
+        '<div class="card-inner">'+
+          '<div class="face face-back"><div class="mon">菓</div></div>'+
+          '<div class="face face-front">'+
+            '<div class="kashi-mark">'+card.item.mark+'</div>'+
+            '<div class="kashi-sub">'+card.item.sub+'</div>'+
+            '<div class="kashi-name">'+card.item.name+'</div>'+
+          '</div>'+
+        '</div>';
+      el.addEventListener('click', function(){ flip(el, card); });
+      board.appendChild(el);
+    });
+  }
+
+  function flip(el,card){
+    if(lock||over) return;
+    if(el.classList.contains('done')) return;
+    if(first&&first.el===el) return;
+    el.classList.add('flipped');
+    if(!first){ first={el:el,card:card}; return; }
+    second={el:el,card:card};
+    lock=true;
+    tries--;
+    triesEl.textContent=tries;
+
+    if(first.card.item.name===second.card.item.name){
+      first.el.classList.add('done'); second.el.classList.add('done');
+      setTimeout(function(){
+        matched++;
+        wonNames.push(first.card.item.name);
+        pairsEl.textContent=matched+'品';
+        first=null; second=null; lock=false;
+        if(tries<=0) finish();
+      },500);
+    } else {
+      setTimeout(function(){
+        first.el.classList.remove('flipped'); second.el.classList.remove('flipped');
+        first=null; second=null; lock=false;
+        if(tries<=0) finish();
+      },900);
+    }
+  }
+
+  function finish(){
+    over=true;
+    if(matched>0){
+      var chips=wonNames.map(function(n){return '<span class="won-chip">'+n+'</span>';}).join('');
+      resultEl.className='win';
+      resultEl.innerHTML='<div class="r-title">あたり '+matched+' 品！</div>'+
+        '<div class="r-body">下記の銘菓を当てられました。<br>この画面を店員にお見せください。</div>'+
+        '<div class="won-list">'+chips+'</div>';
+    } else {
+      resultEl.className='lose';
+      resultEl.innerHTML='<div class="r-title">ざんねん…</div>'+
+        '<div class="r-body">今回はそろいませんでした。<br>またのご来店をお待ちしております。</div>';
+    }
+    resultEl.style.display='block';
+  }
+
+  resetBtn.addEventListener('click', init);
+  init();
+})();
+</script>
+</body>
+</html>
