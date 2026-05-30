@@ -30,7 +30,12 @@
   #title-screen{text-align:center;}
   .title-game{font-size:22px; letter-spacing:0.2em; color:var(--ink); margin:4px 0 2px; font-weight:700;}
   .title-lead{font-size:15px; color:var(--ink-soft); line-height:1.7; margin:10px auto 14px; max-width:560px; font-weight:600;}
-  .staff-note{font-size:13px; color:var(--ink-soft); letter-spacing:0.08em; margin-bottom:10px; font-weight:600;}
+  .title-notice{position:relative; max-width:460px; margin:14px auto 12px; padding:16px 18px 15px;
+    background:linear-gradient(180deg,#fff8e8,#fbf2db); border:1.5px solid var(--gold-soft); border-radius:16px;
+    color:var(--crimson); font-size:19px; font-weight:700; line-height:1.6; letter-spacing:0.04em;
+    box-shadow:0 3px 0 rgba(168,134,47,0.18);}
+  .title-notice .notice-mark{display:inline-block; margin-bottom:8px; padding:3px 14px; border-radius:20px;
+    background:var(--crimson); color:#fbf7ee; font-size:13px; font-weight:700; letter-spacing:0.12em;}
   .tier-buttons{display:flex; flex-direction:column; gap:10px; max-width:420px; margin:0 auto;}
   .tier-btn{
     font-family:inherit; cursor:pointer; text-align:center;
@@ -140,12 +145,14 @@
   <!-- タイトル / 金額選択画面 -->
   <div id="title-screen">
     <div class="title-game">お買い物お楽しみゲーム</div>
-    <div class="title-lead">
-      ご来店ありがとうございます。<br>
-      神経衰弱で同じ銘菓をそろえると、その数だけ和菓子を一品プレゼント。<br>
-      ぜひお楽しみください。
+    <div class="title-notice">
+      <span class="notice-mark">お知らせ</span>
+      現在、お買い物金額に応じて<br>素敵な特典をご用意しております！
     </div>
-    <div class="staff-note">― 店員がお会計金額に応じてお選びください ―</div>
+    <div class="title-lead">
+      神経衰弱で同じ銘菓をそろえると、その数だけ和菓子を一品プレゼント。<br>
+      下のボタンから、お会計金額に応じてお選びください。
+    </div>
     <div class="tier-buttons">
       <button class="tier-btn" data-tries="1">
         <div class="t-amt">3,000円以上 お買い上げ</div>
